@@ -58,12 +58,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "project-lampp:build:production"
+              "browserTarget": "project-lampp:build:production",
             },
             "development": {
-              "browserTarget": "project-lampp:build:development"
+              "browserTarget": "project-lampp:build:development",
             }
           },
           "defaultConfiguration": "development"
@@ -94,5 +97,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "5b3b1764-037e-47de-b01a-009d0ab83e37"
   }
 }
