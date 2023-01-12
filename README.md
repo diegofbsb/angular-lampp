@@ -1,4 +1,4 @@
-# ProjectLampp
+# ProjectLampp, O projeto é um sistema de cadastro de pessoas com alguns dados pessoais.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.0.
 
