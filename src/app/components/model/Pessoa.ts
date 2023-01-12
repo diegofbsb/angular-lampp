@@ -5,6 +5,6 @@ export interface Pessoa{
   ddd: number;
   telefone: number;
   cpf: number;
-  dataNascimento: String;
+  dataNascimento: string;
   observacoes: string;
 }
