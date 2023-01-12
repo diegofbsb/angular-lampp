@@ -1,4 +1,4 @@
-<form class="container" [formGroup]="formGroupPessoa" (ngSubmit)="salvarPessoa()">
+<form class="container align-middle" [formGroup]="formGroupPessoa" (ngSubmit)="salvarPessoa()">
   <br><br>
   <div class="media col-4">
     <div class="media-body">
@@ -11,15 +11,15 @@
            name="nome" id="nome" formControlName="name" required>
     <br>
     <input type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon1"
-           name="nome" id="email" formControlName="email" required>
+           name="nome" id="email" formControlName="email" ngModel email="true" required>
     <br>
-    <input type="text" class="form-control" placeholder="DDD" aria-describedby="basic-addon1"
+    <input type="text" (keypress)="onlynumber($event)" class="form-control" placeholder="DDD: 00" aria-describedby="basic-addon1"
            name="nome" id="ddd" formControlName="ddd" maxlength="2" required>
     <br>
-    <input type="text" class="form-control" placeholder="Telefone" aria-describedby="basic-addon1"
+    <input type="text" (keypress)="onlynumber($event)" class="form-control" placeholder="Telefone: 000000000" aria-describedby="basic-addon1"
            name="nome" id="telefone" formControlName="telefone" maxlength="9" required>
     <br>
-    <input type="text" class="form-control" placeholder="CPF" aria-describedby="basic-addon1"
+    <input type="text" (keypress)="onlynumber($event)" class="form-control" placeholder="CPF: 00000000000" aria-describedby="basic-addon1"
            name="nome" id="cpf" formControlName="cpf" maxlength="11" required>
     <br>
     <label for="dataNascimento">Data de nascimento</label>
@@ -35,7 +35,7 @@
       <div class="col">
         <input type="submit" class="btn btn-primary mt-4 btn-sm" value="Salvar">
         &nbsp;&nbsp;
-        <a href="#" class="btn btn-danger mt-4 btn-sm">Cancelar</a>
+        <a class="btn btn-danger mt-4 btn-sm" (click)="reset()">Cancelar</a>
       </div>
     </div>
   </div>

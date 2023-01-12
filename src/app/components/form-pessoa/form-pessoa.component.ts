@@ -24,7 +24,9 @@ export class FormPessoaComponent implements OnInit {
     this.formGroupPessoa = this.formBuilder.group({
       id: ['', [Validators.required]],
       name: ['', [Validators.required]],
-      email: ['', [Validators.required]],
+      email: ['', [Validators.maxLength(250),
+        Validators.minLength(5),
+        Validators.pattern(/.+@.+\..+/)]],
       ddd: ['', [Validators.required]],
       telefone: ['', [Validators.required]],
       cpf: ['', [Validators.required]],
@@ -37,8 +39,10 @@ export class FormPessoaComponent implements OnInit {
     this.formGroupPessoa = this.formBuilder.group({
       id: ['', [Validators.required]],
       name: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      ddd: ['', [Validators.max(2)]],
+      email: ['', [Validators.maxLength(250),
+        Validators.minLength(5),
+        Validators.pattern(/.+@.+\..+/)]],
+      ddd: ['', [Validators.length == 2]],
       telefone: ['', [Validators.length == 9]],
       cpf: ['', [Validators.length == 11]],
       dataNascimento: ['', [Validators.required]],
@@ -47,22 +51,25 @@ export class FormPessoaComponent implements OnInit {
   }
 
   salvarPessoa() {
-    this.pessoa = this.formGroupPessoa.value;
-    this.pessoa.dataNascimento = this.transform(this.pessoa.dataNascimento)
-    this.pessoaserviceService.savePessoa(this.pessoa).subscribe((resp) => {
-      this.pessoaserviceService.getAllPessoa().subscribe((data: Pessoa[]) => {
-        this.pessoaList = data;
-      }, error => {
-        console.log(error);
+    if (!this.formGroupPessoa.valid) {
+      this.pessoa = this.formGroupPessoa.value;
+      this.pessoa.dataNascimento = this.transform(this.pessoa.dataNascimento)
+      this.pessoaserviceService.savePessoa(this.pessoa).subscribe((resp) => {
+        this.pessoaserviceService.getAllPessoa().subscribe((data: Pessoa[]) => {
+          this.pessoaList = data
+          this.formGroupPessoa.reset();
+        }, error => {
+          console.log(error);
+        });
       });
-    });
-    this.formGroupPessoa.reset();
+    }
   }
 
   excluirPessoa(pessoa: Pessoa) {
     console.log(pessoa);
     this.pessoaserviceService.deletePessoa(pessoa).subscribe(data => {
-      console.log(data);
+    }, error => {
+      console.log(error);
     });
     this.pessoaList.splice(this.pessoaList.indexOf(pessoa), 1);
   }
@@ -102,4 +109,19 @@ export class FormPessoaComponent implements OnInit {
     })
   }
 
+  reset(){
+    this.formGroupPessoa.reset();
+  }
+
+  onlynumber(evt) {
+    var theEvent = evt || window.event;
+    var key = theEvent.keyCode || theEvent.which;
+    key = String.fromCharCode( key );
+    //var regex = /^[0-9.,]+$/;
+    var regex = /^[0-9.]+$/;
+    if( !regex.test(key) ) {
+      theEvent.returnValue = false;
+      if(theEvent.preventDefault) theEvent.preventDefault();
+    }
+  }
 }
