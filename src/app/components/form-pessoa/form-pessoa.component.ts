@@ -39,9 +39,7 @@ export class FormPessoaComponent implements OnInit {
     this.formGroupPessoa = this.formBuilder.group({
       id: ['', [Validators.required]],
       name: ['', [Validators.required]],
-      email: ['', [Validators.maxLength(250),
-        Validators.minLength(5),
-        Validators.pattern(/.+@.+\..+/)]],
+      email: ['', [Validators.required]],
       ddd: ['', [Validators.length == 2]],
       telefone: ['', [Validators.length == 9]],
       cpf: ['', [Validators.length == 11]],
@@ -51,7 +49,6 @@ export class FormPessoaComponent implements OnInit {
   }
 
   salvarPessoa() {
-    if (!this.formGroupPessoa.valid) {
       this.pessoa = this.formGroupPessoa.value;
       this.pessoa.dataNascimento = this.transform(this.pessoa.dataNascimento)
       this.pessoaserviceService.savePessoa(this.pessoa).subscribe((resp) => {
@@ -62,7 +59,6 @@ export class FormPessoaComponent implements OnInit {
           console.log(error);
         });
       });
-    }
   }
 
   excluirPessoa(pessoa: Pessoa) {
